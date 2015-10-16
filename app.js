@@ -4,9 +4,11 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
-var routes = require('./routes/index');
-var users = require('./routes/users');
+//route引入
+var routes = require('./routes/index');//主页
+// var users = require('./routes/users');
+var utility = require('./routes/utility');//utility md5加密
+var cheerio = require('./routes/cheerio');//爬虫
 
 var app = express();
 
@@ -21,9 +23,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+//route定向
 app.use('/', routes);
-app.use('/users', users);
+// app.use('/users', users);
+app.use('/utility', utility);
+app.use('/cheerio',cheerio);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -56,5 +60,8 @@ app.use(function(err, req, res, next) {
   });
 });
 
+// app.get('/movie/add',movie.movieAdd);//增加
+// app.post('/movie/add',movie.doMovieAdd);//提交
+//app.get('/movie/:name',movie.movieAdd);//编辑查询
 
 module.exports = app;
